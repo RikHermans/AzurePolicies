@@ -1,0 +1,51 @@
+LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\""
+
+"%{X-Forwarded-For}i %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\" %T %D"
+
+
+x-forwarded-for, remote logname, remote user, time, first line request, status, bytes sent, referer, user-agent, timetakenseconds, timetakenmicroseconds
+
+178.84.248.241, 95.101.79.47, 95.100.169.21, 10.150.65.58 - - [10/Nov/2020:09:38:28 +0100] "POST /web/api/mailitem/_search HTTP/1.1" 500 315 "https://portokosten.postnl.nl/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36" 30 30013811
+
+^%{IP_LIST:ip_trail} %{DATA:remote_logname} %{DATA:user.name} \[%{HTTPDATE:apache.access.time}\] "(?:%{WORD:http.request.method} %{DATA:url.original} HTTP/%{NUMBER:http.version}|-)?" %{NUMBER:http.response.status_code:long} (?:%{NUMBER:http.response.body.bytes:long}|-)( "%{DATA:http.request.referrer}")
+
+
+
+
+
+POST /_ingest/pipeline/_simulate
+{
+  "pipeline" : {
+    "description": "Parse HTTP Access Logs",
+    "processors": [
+      {
+        "grok": {
+          "field" : "message",
+          "patterns" : [
+            "^%{IP_LIST:ip_trail} %{DATA:remote_logname} %{DATA:user.name} \[%{HTTPDATE:apache.access.time}\]"
+          ],
+          "pattern_definitions": {
+            "IP_LIST": """(?:%{IP}|%{WORD})("?,?\s*(?:%{IP}|%{WORD}))*"""
+           }
+        }
+      },
+      {
+        "split" : {
+          "field" : "ip_trail",
+          "separator" : "\"?,?\\s+",
+          "ignore_missing" : true
+        }
+      },
+      {
+        "split" : {
+          "separator" : "\"?,?\\s+",
+          "ignore_missing" : true,
+          "field" : "nginx.access.origin"
+        }
+      }
+    ]
+  },
+  "docs" : [
+    { "_source": { "message": "178.84.248.241, 95.101.79.47, 95.100.169.21, 10.150.65.58 - - [10/Nov/2020:09:38:28 +0100] \"POST /web/api/mailitem/_search HTTP/1.1\" 500 315 \"https://portokosten.postnl.nl/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36\" 30 30013811"} }
+  ]
+}
