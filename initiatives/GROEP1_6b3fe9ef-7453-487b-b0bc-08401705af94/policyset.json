@@ -1,13 +1,13 @@
 {
  "properties": {
-  "displayName": "GROEP1",
+  "displayName": "GROEP14",
   "policyType": "Custom",
   "metadata": {
    "category": "Compute",
    "parameterScopes": {
-    "listOfAllowedSKUs": "/subscriptions/8d29ef9c-a962-4ba7-b67e-109beea6d0d9",
-    "listOfAllowedLocations": "/subscriptions/8d29ef9c-a962-4ba7-b67e-109beea6d0d9",
-    "listOfResourceTypesAllowed": "/subscriptions/8d29ef9c-a962-4ba7-b67e-109beea6d0d9"
+    "listOfAllowedSKUs": "/subscriptions/d29b71d8-0631-4279-8d1d-0c39ad600490",
+    "listOfAllowedLocations": "/subscriptions/d29b71d8-0631-4279-8d1d-0c39ad600490",
+    "listOfResourceTypesAllowed": "/subscriptions/d29b71d8-0631-4279-8d1d-0c39ad600490"
    },
    "createdBy": "",
    "createdOn": "2020-03-18T12:58:42.2635261Z",
@@ -295,7 +295,7 @@
    }
   ]
  },
- "id": "/subscriptions/8d29ef9c-a962-4ba7-b67e-109beea6d0d9/providers/Microsoft.Authorization/policySetDefinitions/6b3fe9ef-7453-487b-b0bc-08401705af94",
+ "id": "/subscriptions/d29b71d8-0631-4279-8d1d-0c39ad600490/providers/Microsoft.Authorization/policySetDefinitions/6b3fe9ef-7453-487b-b0bc-08401705af94",
  "type": "Microsoft.Authorization/policySetDefinitions",
  "name": "6b3fe9ef-7453-487b-b0bc-08401705af94"
 }
